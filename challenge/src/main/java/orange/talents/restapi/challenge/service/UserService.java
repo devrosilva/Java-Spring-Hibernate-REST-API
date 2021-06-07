@@ -1,6 +1,7 @@
 package orange.talents.restapi.challenge.service;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -44,38 +45,56 @@ public class UserService implements IUserService {
 	@Override
 	public User getUser(Integer id) {
 		
-		User user = userDao.findById(id).get();
-		Iterator<Vehicle> iterator = user.getVehicle().iterator();
-		Vehicle vehicle;
-		//Checks whether today's status restriction is true or false.
-		while(iterator.hasNext()) {
-			vehicle = iterator.next();
-			if(vehicle.getTrafficRestrictionDay() != null && dateCheckService.checkRestrictionStatus(vehicle)) {
-				vehicle.setTrafficRestrictionStatus(true);
+		try {
+			User user = userDao.findById(id).get();
+			Iterator<Vehicle> iterator = user.getVehicle().iterator();
+			Vehicle vehicle;
+			//Checks whether today's status restriction is true or false.
+			while(iterator.hasNext()) {
+				vehicle = iterator.next();
+				if(vehicle.getTrafficRestrictionDay() != null && dateCheckService.checkRestrictionStatus(vehicle)) {
+					vehicle.setTrafficRestrictionStatus(true);
+				}
+				else {
+					vehicle.setTrafficRestrictionStatus(false);
+				}
 			}
-			else {
-				vehicle.setTrafficRestrictionStatus(false);
-			}
+			return userDao.findById(id).get();
 		}
-		return userDao.findById(id).get();
+		catch(NoSuchElementException ex) {
+			System.out.println("User not found.");
+		}
+		catch(Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		}
+		return null;
 	}
 	
 	@Override
 	public User getUser(String cpf) {
-		User user = userDao.findByCpf(cpf).get();
-		Iterator<Vehicle> iterator = user.getVehicle().iterator();
-		Vehicle vehicle;
-		//Checks whether today's status restriction is true or false. 
-		while(iterator.hasNext()) {
-			vehicle = iterator.next();
-			if(vehicle.getTrafficRestrictionDay() != null && dateCheckService.checkRestrictionStatus(vehicle)) {
-				vehicle.setTrafficRestrictionStatus(true);
+		try {
+			User user = userDao.findByCpf(cpf).get();
+			Iterator<Vehicle> iterator = user.getVehicle().iterator();
+			Vehicle vehicle;
+			//Checks whether today's status restriction is true or false. 
+			while(iterator.hasNext()) {
+				vehicle = iterator.next();
+				if(vehicle.getTrafficRestrictionDay() != null && dateCheckService.checkRestrictionStatus(vehicle)) {
+					vehicle.setTrafficRestrictionStatus(true);
+				}
+				else {
+					vehicle.setTrafficRestrictionStatus(false);
+				}
 			}
-			else {
-				vehicle.setTrafficRestrictionStatus(false);
-			}
+			return userDao.findByCpf(cpf).get();
 		}
-		return userDao.findByCpf(cpf).get();
+		catch(NoSuchElementException ex) {
+			System.out.println("User not found.");
+		}
+		catch(Exception ex) {
+			System.out.println("Error: " + ex.getMessage());
+		}
+		return null;
 	}
 	
 	//Methods intended to be used at vehicle registration
