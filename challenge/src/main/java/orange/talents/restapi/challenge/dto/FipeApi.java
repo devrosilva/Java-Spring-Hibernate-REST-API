@@ -2,6 +2,8 @@ package orange.talents.restapi.challenge.dto;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class FipeApi implements Serializable{
 	
 	private static final long serialVersionUID = 522317954451875201L;
@@ -12,16 +14,29 @@ public class FipeApi implements Serializable{
 	private String nome;
 	private String codigo;
 	
-	//These variable weren't being set properly with private modifiers
-	public String Valor;
-	public String Marca;
-	public String Modelo;
-	public String Combustivel;
-	public String CodigoFipe;
-	public String MesReferencia;
-	public String SiglaCombustivel;
-	public Integer AnoModelo;
-	public Integer TipoVeiculo;
+	/*
+	Variables sent by the third part API with the first letter in uppercase.
+	I used @JsonAlias to avoid problems with Getters and Setters being unable to
+	set properties properly
+	*/
+	@JsonAlias("Valor")
+	private String valor;
+	@JsonAlias("Marca")
+	private String marca;
+	@JsonAlias("Modelo")
+	private String modelo;
+	@JsonAlias("Combustivel")
+	private String combustivel;
+	@JsonAlias("CodigoFipe")
+	private String codigoFipe;
+	@JsonAlias("MesReferencia")
+	private String mesReferencia;
+	@JsonAlias("SiglaCombustivel")
+	private String siglaCombustivel;
+	@JsonAlias("AnoModelo")
+	private Integer anoModelo;
+	@JsonAlias("TipoVeiculo")
+	private Integer tipoVeiculo;
 	
 	public FipeApi() {
 		super();
@@ -60,74 +75,75 @@ public class FipeApi implements Serializable{
 	}
 
 	public String getValor() {
-		return Valor;
+		return valor;
 	}
 
 	public void setValor(String valor) {
-		Valor = valor;
+		this.valor = valor;
 	}
 
 	public String getMarca() {
-		return Marca;
+		return marca;
 	}
 
 	public void setMarca(String marca) {
-		Marca = marca;
+		this.marca = marca;
 	}
 
 	public String getModelo() {
-		return Modelo;
+		return modelo;
 	}
 
 	public void setModelo(String modelo) {
-		Modelo = modelo;
+		this.modelo = modelo;
 	}
 
 	public String getCombustivel() {
-		return Combustivel;
+		return combustivel;
 	}
 
 	public void setCombustivel(String combustivel) {
-		Combustivel = combustivel;
+		this.combustivel = combustivel;
 	}
 
 	public String getCodigoFipe() {
-		return CodigoFipe;
+		return codigoFipe;
 	}
 
 	public void setCodigoFipe(String codigoFipe) {
-		CodigoFipe = codigoFipe;
+		this.codigoFipe = codigoFipe;
 	}
 
 	public String getMesReferencia() {
-		return MesReferencia;
+		return mesReferencia;
 	}
 
 	public void setMesReferencia(String mesReferencia) {
-		MesReferencia = mesReferencia;
+		this.mesReferencia = mesReferencia;
 	}
 
 	public String getSiglaCombustivel() {
-		return SiglaCombustivel;
+		return siglaCombustivel;
 	}
 
 	public void setSiglaCombustivel(String siglaCombustivel) {
-		SiglaCombustivel = siglaCombustivel;
+		this.siglaCombustivel = siglaCombustivel;
 	}
 
 	public Integer getAnoModelo() {
-		return AnoModelo;
+		return anoModelo;
 	}
 
 	public void setAnoModelo(Integer anoModelo) {
-		AnoModelo = anoModelo;
+		this.anoModelo = anoModelo;
 	}
 
 	public Integer getTipoVeiculo() {
-		return TipoVeiculo;
+		return tipoVeiculo;
 	}
 
 	public void setTipoVeiculo(Integer tipoVeiculo) {
-		TipoVeiculo = tipoVeiculo;
+		this.tipoVeiculo = tipoVeiculo;
 	}
 }
+
